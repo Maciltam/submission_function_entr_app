@@ -1,12 +1,12 @@
 const { uploadFile } = require("./uploadFile");
 const { createRow } = require("./createRow.js");
-const { constructUrl } = require("./getFileUrl.js");
 
 const testObject = {
   key1: "value1",
   key2: "value2",
   key3: "value3",
 };
+
 const testString = JSON.stringify(testObject);
 
 const testBuffer = Buffer.from(testString, "utf-8");
@@ -36,6 +36,7 @@ const mockupRequest = {
 const processFunction = async ({ req, res, log }) => {
   const { tableData, files } = req.body;
   const { candidate1, candidate2 } = files;
+  log("Hello");
 
   let applicationType = "simple";
   if (candidate2.cv) {
