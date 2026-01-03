@@ -36,7 +36,8 @@ const mockupRequest = {
 const processFunction = async ({ req, res, log }) => {
   const { tableData, files } = req.body;
   const { candidate1, candidate2 } = files;
-  log("Hello");
+  context.log(files);
+  context.log(tableData);
 
   let applicationType = "simple";
   if (candidate2.cv) {
