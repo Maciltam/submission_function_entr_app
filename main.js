@@ -34,6 +34,7 @@ const mockupRequest = {
 };
 
 const processFunction = async ({ req, res, log }) => {
+  log(typeof req);
   const request = JSON.parse(req);
   const { tableData, files } = request.body;
   const { candidate1, candidate2 } = files;
