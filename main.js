@@ -33,7 +33,7 @@ const mockupRequest = {
   },
 };
 
-const processFunction = async ({ req, res }) => {
+const processFunction = async ({ req, res, log }) => {
   const { tableData, files } = req.body;
   const { candidate1, candidate2 } = files;
 
@@ -47,6 +47,8 @@ const processFunction = async ({ req, res }) => {
 
   const photoBucket = process.env.BUCKET_ID;
   const cvBucket = process.env.BUCKET_ID;
+  log(photoBucket);
+  log(cvBucket);
 
   if (applicationType == "simple") {
     uploadFile(candidate1.photo, photoBucket)
