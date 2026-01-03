@@ -34,9 +34,7 @@ const mockupRequest = {
 };
 
 const processFunction = async ({ req, res, log }) => {
-  const data = JSON.parse(req.bodyJson);
-  log(data);
-  const { tableData, files } = request.body;
+  const { tableData, files } = request.bodyJson;
   const { candidate1, candidate2 } = files;
 
   let applicationType = "simple";
