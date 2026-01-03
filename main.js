@@ -33,7 +33,7 @@ const mockupRequest = {
   },
 };
 
-const processFunction = ({ req, res }) => {
+const processFunction = async ({ req, res }) => {
   const { tableData, files } = req.body;
   const { candidate1, candidate2 } = files;
 
@@ -111,4 +111,5 @@ const processFunction = ({ req, res }) => {
       });
   }
 };
-processFunction({ req: mockupRequest, res: {} });
+
+module.exports = processFunction;
