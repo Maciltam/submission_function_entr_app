@@ -1,5 +1,5 @@
 const { uploadFile } = require("./uploadFile");
-const createRow = require("./createRow.js");
+const { createRow } = require("./createRow.js");
 const { constructUrl } = require("./getFileUrl.js");
 
 const testObject = {
@@ -13,7 +13,13 @@ const testBuffer = Buffer.from(testString, "utf-8");
 
 const mockupRequest = {
   body: {
-    tableData: {},
+    tableData: {
+      candidate1_name: "John Doe",
+      candidate2_name: "John Doe",
+      department: "Automatique",
+      short_description: "Short description",
+      long_description: "Long description",
+    },
     files: {
       candidate1: {
         photo: testBuffer,
@@ -28,7 +34,7 @@ const mockupRequest = {
 };
 
 const processFunction = ({ req, res }) => {
-  const { tabeData, files } = req.body;
+  const { tableData, files } = req.body;
   const { candidate1, candidate2 } = files;
 
   let applicationType = "simple";
@@ -36,71 +42,72 @@ const processFunction = ({ req, res }) => {
     applicationType = "double";
   }
 
-  let candidate1Urls = {};
-  let candidate2Urls = {};
+  let candidate1Ids = {};
+  let candidate2Ids = {};
 
   const photoBucket = process.env.BUCKET_ID;
   const cvBucket = process.env.BUCKET_ID;
-  const projectId = process.env.PROJECT_ID;
 
   if (applicationType == "simple") {
     uploadFile(candidate1.photo, photoBucket)
       .then((response) => {
-        candidate1Urls.photo = constructUrl(
-          response.$id,
-          projectId,
-          photoBucket,
-        );
+        candidate1Ids.photo = response.$id;
       })
       .then(() => {
         return uploadFile(candidate1.cv, cvBucket);
       })
       .then((response) => {
-        candidate1Urls.cv = constructUrl(response.$id, projectId, cvBucket);
+        candidate1Ids.cv = response.$id;
       });
   } else if (applicationType == "double") {
     uploadFile(candidate1.photo, photoBucket)
       .then((response) => {
         console.log("Candidate 1 photo upload response:", response);
-        candidate1Urls.photo = constructUrl(
-          response.$id,
-          projectId,
-          photoBucket,
-        );
+        candidate1Ids.photo = response.$id;
       })
       .then(() => {
         return uploadFile(candidate1.cv, cvBucket);
       })
       .then((response) => {
         console.log("Candidate 1 CV upload response:", response);
-        candidate1Urls.cv = constructUrl(response.$id, projectId, cvBucket);
+        candidate1Ids.cv = response.$id;
       })
       .then(() => {
         return uploadFile(candidate2.cv, cvBucket);
       })
       .then((response) => {
         console.log("Candidate 2 CV upload response:", response);
-        candidate2Urls.cv = constructUrl(response.$id, projectId, cvBucket);
+        candidate2Ids.cv = response.$id;
       })
       .then(() => {
         return uploadFile(candidate2.photo, photoBucket);
       })
       .then((response) => {
         console.log("Candidate 2 photo upload response:", response);
-        candidate2Urls.photo = constructUrl(
-          response.$id,
-          projectId,
-          photoBucket,
-        );
+        candidate2Ids.photo = response.$id;
       })
       .then(() => {
         return {
-          candidate1: candidate1Urls,
-          candidate2: candidate2Urls,
+          candidate1: candidate1Ids,
+          candidate2: candidate2Ids,
         };
       })
-      .then((urls) => {
-        console.log(urls);
+      .then((ids) => {
+        tableData.candidate1_photo_id = ids.candidate1.photo;
+        tableData.candidate1_cv_id = ids.candidate1.cv;
+        tableData.candidate2_photo_id = ids.candidate2.photo;
+        tableData.candidate2_cv_id = ids.candidate2.cv;
+        return tableData;
+      })
+      .then((row) => {
+        const response = createRow(row);
+        return response;
+      })
+      .then(() => {
+        res.text("success");
+      })
+      .catch(() => {
+        res.text("error");
       });
   }
 };
