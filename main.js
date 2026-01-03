@@ -107,10 +107,10 @@ const processFunction = async ({ req, res, log }) => {
         return response;
       })
       .then(() => {
-        res.text("success");
+        return res.text("success");
       })
       .catch(() => {
-        res.text("error");
+        return res.text("error");
       });
   }
 };
