@@ -68,10 +68,8 @@ const processFunction = async ({ req, res, log }) => {
   const { tableData, files } = req.bodyJson;
   const { candidate1, candidate2 } = files;
   log(candidate1);
-  const photoBucket = process.env.BUCKET_ID;
-  const cvBucket = process.env.BUCKET_ID;
 
-  const { c1, c2 } = await composeUploads(candidate1, candidate2);
+  const { c1, c2 } = await composeUploads({ candidate1, candidate2 });
   const row = prepareRow(tableData, { c1, c2 });
   const uploadResponse = await createRow(row);
 
