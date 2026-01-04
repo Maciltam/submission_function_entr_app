@@ -67,11 +67,7 @@ const mockupRequest = {
 const processFunction = async ({ req, res, log }) => {
   const { tableData, files } = req.bodyJson;
   const { candidate1, candidate2 } = files;
-  const response = { status: "failed" };
-
-  let candidate1Ids = {};
-  let candidate2Ids = {};
-
+  log(candidate1);
   const photoBucket = process.env.BUCKET_ID;
   const cvBucket = process.env.BUCKET_ID;
 
