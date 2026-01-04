@@ -72,7 +72,7 @@ const processFunction = async ({ req, res, log }) => {
     const row = prepareRow(tableData, { c1, c2 });
     await createRow(row);
     return res.text(JSON.stringify({ status: "sucees" }));
-  } catch (err) {
+  } catch {
     //Add cleanup logic
     return res.text(err.message);
   }
