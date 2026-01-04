@@ -63,7 +63,7 @@ const processFunction = async ({ req, res, log }) => {
         candidate1Ids.cv = response.$id;
       });
   } else if (applicationType == "double") {
-    const response = uploadFile(candidate1.photo, photoBucket)
+    await uploadFile(candidate1.photo, photoBucket)
       .then((response) => {
         console.log("Candidate 1 photo upload response:", response);
         candidate1Ids.photo = response.$id;
@@ -112,8 +112,8 @@ const processFunction = async ({ req, res, log }) => {
       .catch(() => {
         response = { status: "error" };
       });
-    return res.text(JSON.stringify(response));
   }
+  return res.text(JSON.stringify(response));
 };
 
 module.exports = processFunction;
