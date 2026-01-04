@@ -42,7 +42,6 @@ const processFunction = async ({ req, res, log }) => {
     const { c1, c2 } = await composeUploads({ candidate1, candidate2 });
     const row = prepareRow(table_data, { c1, c2 });
     await createRow(row);
-    text;
     return res.text(JSON.stringify({ status: "success" }));
   } catch (err) {
     //Add cleanup logic
