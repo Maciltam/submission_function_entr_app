@@ -51,7 +51,7 @@ const processFunction = async ({ req, res, log }) => {
   log(cvBucket);
 
   if (applicationType == "simple") {
-    const response = await uploadFile(candidate1.photo, photoBucket)
+    uploadFile(candidate1.photo, photoBucket)
       .then((response) => {
         candidate1Ids.photo = response.$id;
       })
@@ -62,7 +62,7 @@ const processFunction = async ({ req, res, log }) => {
         candidate1Ids.cv = response.$id;
       });
   } else if (applicationType == "double") {
-    uploadFile(candidate1.photo, photoBucket)
+    const response = uploadFile(candidate1.photo, photoBucket)
       .then((response) => {
         console.log("Candidate 1 photo upload response:", response);
         candidate1Ids.photo = response.$id;
