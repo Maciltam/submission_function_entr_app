@@ -74,7 +74,7 @@ const processFunction = async ({ req, res, log }) => {
     return res.text(JSON.stringify({ status: "sucees" }));
   } catch {
     //Add cleanup logic
-    return res.text(err.message);
+    return res.text(JSON.stringify({ status: "error" }));
   }
 };
 
