@@ -47,7 +47,7 @@ const processFunction = async ({ req, res, log }) => {
   } catch (err) {
     //Add cleanup logic
     // If invalid code error send invalid code response else send internal error
-    return res.text(JSON.stringify({ status: "internal error" }));
+    return res.text(JSON.stringify({ status: "internal error: " + err }));
   }
 };
 
