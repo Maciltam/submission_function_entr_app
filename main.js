@@ -35,6 +35,7 @@ const prepareRow = (receivedData, { c1, c2 }) => {
 const processFunction = async ({ req, res, log }) => {
   const { table_data, files, personal_code, application_type } = req.bodyJson;
   const { candidate1, candidate2 } = files;
+  res.setHeader("Access-Control-Allow-Origin", "*");
 
   try {
     //check code + email function
