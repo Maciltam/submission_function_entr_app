@@ -9,12 +9,12 @@ const client = new Client()
   .setKey(process.env.KEY);
 const storageInterface = new Storage(client);
 
-const uploadFile = async (buffer, bucketId) => {
+const uploadFile = async ({ content, name }, bucketId) => {
   try {
     const response = await storageInterface.createFile(
       bucketId,
       ID.unique(),
-      InputFile.fromBuffer(buffer, ID.unique()),
+      InputFile.fromBuffer(content, name),
     );
     return response;
   } catch (err) {
