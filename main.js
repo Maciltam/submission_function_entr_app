@@ -1,12 +1,6 @@
 const { uploadFile } = require("./uploadFile");
 const { createRow } = require("./createRow.js");
 
-const testObject = {
-  key1: "value1",
-  key2: "value2",
-  key3: "value3",
-};
-
 const composeUploads = async ({ candidate1, candidate2 }) => {
   const photoBucket = process.env.BUCKET_ID;
   const cvBucket = process.env.BUCKET_ID;
@@ -38,43 +32,22 @@ const prepareRow = (receivedData, { c1, c2 }) => {
   return receivedData;
 };
 
-const testString = JSON.stringify(testObject);
-
-const testBuffer = Buffer.from(testString, "utf-8");
-
-const mockupRequest = {
-  body: {
-    tableData: {
-      candidate1_name: "John Doe",
-      candidate2_name: "John Doe",
-      department: "Automatique",
-      short_description: "Short description",
-      long_description: "Long description",
-    },
-    files: {
-      candidate1: {
-        photo: testBuffer,
-        cv: testBuffer,
-      },
-      candidate2: {
-        photo: testBuffer,
-        cv: testBuffer,
-      },
-    },
-  },
-};
-
 const processFunction = async ({ req, res, log }) => {
-  const { tableData, files } = req.bodyJson;
+  const { table_data, files, personal_code, application_type } = req.bodyJson;
   const { candidate1, candidate2 } = files;
+
   try {
+    //check code + email function
+    //if invalid throw error with invalid code
     const { c1, c2 } = await composeUploads({ candidate1, candidate2 });
-    const row = prepareRow(tableData, { c1, c2 });
+    const row = prepareRow(table_data, { c1, c2 });
     await createRow(row);
-    return res.text(JSON.stringify({ status: "sucees" }));
-  } catch {
+    text;
+    return res.text(JSON.stringify({ status: "success" }));
+  } catch (err) {
     //Add cleanup logic
-    return res.text(JSON.stringify({ status: "error" }));
+    // If invalid code error send invalid code response else send internal error
+    return res.text(JSON.stringify({ status: "internal error" }));
   }
 };
 
