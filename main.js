@@ -111,7 +111,7 @@ const processFunction = async ({ req, res, log }) => {
       .catch(() => {
         return { status: "error" };
       });
-    return res.json(response);
+    return res.text(response);
   }
 };
 
