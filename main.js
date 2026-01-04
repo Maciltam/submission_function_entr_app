@@ -36,6 +36,7 @@ const mockupRequest = {
 const processFunction = async ({ req, res, log }) => {
   const { tableData, files } = req.bodyJson;
   const { candidate1, candidate2 } = files;
+  const response = { status: "failed" };
 
   let applicationType = "simple";
   if (candidate2.cv) {
@@ -111,7 +112,7 @@ const processFunction = async ({ req, res, log }) => {
       .catch(() => {
         return { status: "error" };
       });
-    return res.text(response);
+    return res.json(response);
   }
 };
 
