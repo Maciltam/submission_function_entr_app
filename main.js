@@ -67,13 +67,15 @@ const mockupRequest = {
 const processFunction = async ({ req, res, log }) => {
   const { tableData, files } = req.bodyJson;
   const { candidate1, candidate2 } = files;
-  log(candidate1);
-
-  const { c1, c2 } = await composeUploads({ candidate1, candidate2 });
-  const row = prepareRow(tableData, { c1, c2 });
-  const uploadResponse = await createRow(row);
-
-  return res.text(JSON.stringify({ status: "sucees" }));
+  try {
+    const { c1, c2 } = await composeUploads({ candidate1, candidate2 });
+    const row = prepareRow(tableData, { c1, c2 });
+    await createRow(row);
+    return res.text(JSON.stringify({ status: "sucees" }));
+  } catch (err) {
+    //Add cleanup logic
+    return res.text(err.message);
+  }
 };
 
 module.exports = processFunction;
