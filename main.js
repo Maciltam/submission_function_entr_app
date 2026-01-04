@@ -73,7 +73,7 @@ const processFunction = async ({ req, res, log }) => {
   const row = prepareRow(tableData, { c1, c2 });
   const uploadResponse = await createRow(row);
 
-  return res.text(JSON.stringify(uploadResponse));
+  return res.text(JSON.stringify({ status: "sucees" }));
 };
 
 module.exports = processFunction;
