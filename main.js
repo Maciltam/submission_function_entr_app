@@ -51,7 +51,7 @@ const processFunction = async ({ req, res, log }) => {
   log(cvBucket);
 
   if (applicationType == "simple") {
-    uploadFile(candidate1.photo, photoBucket)
+    const response = await uploadFile(candidate1.photo, photoBucket)
       .then((response) => {
         candidate1Ids.photo = response.$id;
       })
@@ -106,11 +106,12 @@ const processFunction = async ({ req, res, log }) => {
         return response;
       })
       .then(() => {
-        return res.text("success");
+        return { status: "success" };
       })
       .catch(() => {
-        return res.text("error");
+        return { status: "error" };
       });
+    return res.json(response);
   }
 };
 
