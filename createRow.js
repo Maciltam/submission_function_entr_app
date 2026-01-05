@@ -1,6 +1,5 @@
 const { Storage, Databases, Client, ID } = require("node-appwrite");
 const { InputFile } = require("node-appwrite/file");
-require("dotenv").config();
 
 const client = new Client()
   .setEndpoint("https://cloud.appwrite.io/v1")

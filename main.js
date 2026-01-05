@@ -1,5 +1,6 @@
 const { uploadFile } = require("./uploadFile");
 const { createRow } = require("./createRow.js");
+const { verifyCode } = require("./verifyCode.js");
 
 const composeUploads = async ({ candidate1, candidate2 }) => {
   const photoBucket = process.env.BUCKET_ID;
@@ -36,6 +37,11 @@ const processFunction = async ({ req, res, log }) => {
   const { table_data, files, personal_code, application_type } = req.bodyJson;
   const { candidate1, candidate2 } = files;
   res.setHeader("Access-Control-Allow-Origin", "*");
+  const { candidate1_mail } = table_data;
+  const verified = await verifyCode({ candidate1_mail, personal_code });
+  if (!verified) {
+    throw new Error("unregistered");
+  }
 
   try {
     //check code + email function
@@ -46,8 +52,11 @@ const processFunction = async ({ req, res, log }) => {
     return res.text(JSON.stringify({ status: "success" }));
   } catch (err) {
     //Add cleanup logic
-    // If invalid code error send invalid code response else send internal error
-    return res.text(JSON.stringify({ status: "internal error: " + err }));
+    if (err.message == "unregistered") {
+      return res.text(JSON.stringify({ status: "unregistered" }));
+    } else {
+      return res.text(JSON.stringify({ status: "internal error" + err }));
+    }
   }
 };
 
