@@ -37,7 +37,6 @@ const processFunction = async ({ req, res, log }) => {
   log("Starting function");
   const { table_data, files, personal_code, application_type } = req.bodyJson;
   const { candidate1, candidate2 } = files;
-  res.setHeader("Access-Control-Allow-Origin", "*");
   const { candidate1_mail } = table_data;
   log(candidate1_mail);
   const verified = await verifyCode({ candidate1_mail, personal_code });
