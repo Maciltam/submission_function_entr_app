@@ -38,8 +38,10 @@ const processFunction = async ({ req, res, log }) => {
   const { candidate1, candidate2 } = files;
   res.setHeader("Access-Control-Allow-Origin", "*");
   const { candidate1_mail } = table_data;
+  log(candidate1_mail);
   const verified = await verifyCode({ candidate1_mail, personal_code });
   if (!verified) {
+    log("unverified");
     throw new Error("unregistered");
   }
 
