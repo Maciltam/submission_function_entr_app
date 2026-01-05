@@ -1,14 +1,14 @@
 const { Storage, Databases, Client, ID } = require("node-appwrite");
 const { InputFile } = require("node-appwrite/file");
-
+require("dotenv").config();
 const client = new Client()
   .setEndpoint("https://cloud.appwrite.io/v1")
   .setProject(process.env.PROJECT_ID)
   .setKey(process.env.KEY);
 
 const databaseInterface = new Databases(client);
-const dbId = process.env.DB_ID;
-const collectionId = process.env.COLLECTION_ID;
+const dbId = process.env.USERS_DB_ID;
+const collectionId = process.env.USERS_COLLECTION_ID;
 
 const createRow = async (data) => {
   try {
