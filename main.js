@@ -39,14 +39,13 @@ const processFunction = async ({ req, res, log }) => {
   const { candidate1, candidate2 } = files;
   const { candidate1_mail } = table_data;
   log(candidate1_mail);
-  const verified = await verifyCode({ candidate1_mail, personal_code });
-  if (!verified) {
-    log("unverified");
-    throw new Error("unregistered");
-  }
 
   try {
     //check code + email function
+    const verified = await verifyCode({ candidate1_mail, personal_code });
+    if (!verified) {
+      throw new Error("unregistered");
+    }
     //if invalid throw error with invalid code
     const { c1, c2 } = await composeUploads({ candidate1, candidate2 });
     const row = prepareRow(table_data, { c1, c2 });
