@@ -12,7 +12,8 @@ const uploadFile = async ({ content, name }, bucketId) => {
     const response = await storageInterface.createFile(
       bucketId,
       ID.unique(),
-      InputFile.fromBuffer(buffer, name),
+      buffer,
+      name,
     );
     return response;
   } catch (err) {
