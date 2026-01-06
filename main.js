@@ -4,8 +4,8 @@ const { verifyCode } = require("./verifyCode.js");
 const { constructUrl } = require("./constructUrl.js");
 
 const composeUploads = async ({ candidate1, candidate2 }, application_type) => {
-  const photoBucket = process.env.CV_BUCKET_ID;
-  const cvBucket = process.env.PHOTO_BUCKET_ID;
+  const photoBucket = process.env.PHOTO_BUCKET_ID;
+  const cvBucket = process.env.CV_BUCKET_ID;
   let c1 = { photo: null, cv: null };
   let c2 = { photo: null, cv: null };
   //Upload cv1 and photo1
