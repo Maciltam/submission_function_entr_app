@@ -7,13 +7,12 @@ const uploadFile = async ({ content, name }, bucketId) => {
     .setEndpoint("https://cloud.appwrite.io/v1")
     .setProject(process.env.PROJECT_ID)
     .setKey(process.env.KEY);
-  const storageInterface = new Storage(client);
+  const storage = new Storage(client);
   try {
-    const response = await storageInterface.createFile(
+    const response = await storage.createFile(
       bucketId,
       ID.unique(),
-      buffer,
-      name,
+      InputFile.fromBuffer(buffer, name),
     );
     return response;
   } catch (err) {
