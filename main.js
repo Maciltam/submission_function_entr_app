@@ -27,10 +27,26 @@ const composeUploads = async ({ candidate1, candidate2 }) => {
 };
 
 const prepareRow = (receivedData, { c1, c2 }) => {
-  receivedData.candidate1_photo_url = constructUrl(c1.photo);
-  receivedData.candidate1_cv_url = constructUrl(c1.cv);
-  receivedData.candidate2_photo_url = constructUrl(c2.photo);
-  receivedData.candidate2_cv_url = constructUrl(c2.cv);
+  receivedData.candidate1_photo_url = constructUrl(
+    c1.photo,
+    process.env.PROJECT_ID,
+    process.env.PHOTO_BUCKET_ID,
+  );
+  receivedData.candidate1_cv_url = constructUrl(
+    c1.cv,
+    process.env.PROJECT_ID,
+    process.env.CV_BUCKET_ID,
+  );
+  receivedData.candidate2_photo_url = constructUrl(
+    c2.photo,
+    process.env.PROJECT_ID,
+    process.env.PHOTO_BUCKET_ID,
+  );
+  receivedData.candidate2_cv_url = constructUrl(
+    c2.cv,
+    process.env.PROJECT_ID,
+    process.env.CV_BUCKET_ID,
+  );
   return receivedData;
 };
 
