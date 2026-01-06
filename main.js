@@ -3,7 +3,7 @@ const { createRow } = require("./createRow.js");
 const { verifyCode } = require("./verifyCode.js");
 const { constructUrl } = require("./constructUrl.js");
 
-const composeUploads = async ({ candidate1, candidate2 }) => {
+const composeUploads = async ({ candidate1, candidate2 }, application_type) => {
   const photoBucket = process.env.CV_BUCKET_ID;
   const cvBucket = process.env.PHOTO_BUCKET_ID;
   let c1 = { photo: null, cv: null };
@@ -13,7 +13,7 @@ const composeUploads = async ({ candidate1, candidate2 }) => {
   c1.cv = cv1Response.$id;
   const photo1Response = await uploadFile(candidate1.photo, photoBucket);
   c1.photo = photo1Response.$id;
-  if (candidate2.photo.name) {
+  if ((application_type = "binome")) {
     //Upload cv2 and photo2
     const cv2Response = await uploadFile(candidate2.cv, cvBucket);
     c2.cv = cv2Response.$id;
@@ -66,7 +66,10 @@ const processFunction = async ({ req, res, log }) => {
       throw new Error("unregistered");
     }
     //if invalid throw error with invalid code
-    const { c1, c2 } = await composeUploads({ candidate1, candidate2 });
+    const { c1, c2 } = await composeUploads(
+      { candidate1, candidate2 },
+      application_type,
+    );
     log("preparing row");
     const row = prepareRow(table_data, { c1, c2 });
     log(row);
