@@ -2,6 +2,7 @@ const { InputFile } = require("node-appwrite/file");
 const { Client, Storage, ID } = require("node-appwrite");
 
 const uploadFile = async ({ content, name }, bucketId) => {
+  const buffer = Buffer.from(content, "base64");
   const client = new Client()
     .setEndpoint("https://cloud.appwrite.io/v1")
     .setProject(process.env.PROJECT_ID)
@@ -11,7 +12,7 @@ const uploadFile = async ({ content, name }, bucketId) => {
     const response = await storageInterface.createFile(
       bucketId,
       ID.unique(),
-      InputFile.fromPlainText(content, name),
+      InputFile.fromBuffer(buffer, name),
     );
     return response;
   } catch (err) {
