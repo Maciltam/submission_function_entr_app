@@ -1,7 +1,7 @@
 const { uploadFile } = require("./uploadFile");
 const { createRow } = require("./createRow.js");
 const { verifyCode } = require("./verifyCode.js");
-const { getFileUrl } = require("./getFileUrl.js");
+const { con, constructUrlstructUrl } = require("./constructUrl.js");
 
 const composeUploads = async ({ candidate1, candidate2 }) => {
   const photoBucket = process.env.BUCKET_ID;
@@ -27,10 +27,10 @@ const composeUploads = async ({ candidate1, candidate2 }) => {
 };
 
 const prepareRow = (receivedData, { c1, c2 }) => {
-  receivedData.candidate1_photo_url = getFileUrl(c1.photo);
-  receivedData.candidate1_cv_url = getFileUrl(c1.cv);
-  receivedData.candidate2_photo_url = getFileUrl(c2.photo);
-  receivedData.candidate2_cv_url = getFileUrl(c2.cv);
+  receivedData.candidate1_photo_url = constructUrl(c1.photo);
+  receivedData.candidate1_cv_url = constructUrl(c1.cv);
+  receivedData.candidate2_photo_url = constructUrl(c2.photo);
+  receivedData.candidate2_cv_url = constructUrl(c2.cv);
   return receivedData;
 };
 
