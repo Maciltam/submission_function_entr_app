@@ -1,7 +1,7 @@
 const { uploadFile } = require("./uploadFile");
 const { createRow } = require("./createRow.js");
 const { verifyCode } = require("./verifyCode.js");
-const { getFileUrl } = require("./getFileUrl.jsgetFileUrl(");
+const { getFileUrl } = require("./getFileUrl.js");
 
 const composeUploads = async ({ candidate1, candidate2 }) => {
   const photoBucket = process.env.BUCKET_ID;
