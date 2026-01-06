@@ -67,6 +67,7 @@ const processFunction = async ({ req, res, log }) => {
     log("preparing row");
     const row = prepareRow(table_data, { c1, c2 });
     log(row);
+    log(typeof row.candidate1_photo_url);
     await createRow(row);
     return res.text(JSON.stringify({ status: "success" }));
   } catch (err) {
