@@ -3,7 +3,7 @@ const { createRow } = require("./createRow.js");
 const { verifyCode } = require("./verifyCode.js");
 const { getFileUrl } = require("./getFileUrl.jsgetFileUrl(");
 
-con)st composeUploads = async ({ candidate1, candidate2 }) => {
+const composeUploads = async ({ candidate1, candidate2 }) => {
   const photoBucket = process.env.BUCKET_ID;
   const cvBucket = process.env.BUCKET_ID;
   let c1 = { photo: null, cv: null };
