@@ -55,6 +55,9 @@ const processFunction = async ({ req, res, log }) => {
   const { table_data, files, personal_code, application_type } = req.bodyJson;
   const { candidate1, candidate2 } = files;
   const { candidate1_mail } = table_data;
+  log("File names");
+  log(candidate1.cv.name);
+  log(candidate1.photo.name);
 
   try {
     //check code + email function
