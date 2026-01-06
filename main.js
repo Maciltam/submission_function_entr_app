@@ -55,7 +55,6 @@ const processFunction = async ({ req, res, log }) => {
   const { table_data, files, personal_code, application_type } = req.bodyJson;
   const { candidate1, candidate2 } = files;
   const { candidate1_mail } = table_data;
-  log(candidate1_mail);
 
   try {
     //check code + email function
@@ -65,7 +64,9 @@ const processFunction = async ({ req, res, log }) => {
     }
     //if invalid throw error with invalid code
     const { c1, c2 } = await composeUploads({ candidate1, candidate2 });
+    log("preparing row");
     const row = prepareRow(table_data, { c1, c2 });
+    log(row);
     await createRow(row);
     return res.text(JSON.stringify({ status: "success" }));
   } catch (err) {
