@@ -10,7 +10,6 @@ const composeUploads = async ({ candidate1, candidate2 }, application_type) => {
   let c2 = { photo: null, cv: null };
   //Upload cv1 and photo1
   const cv1Response = await uploadFile(candidate1.cv, cvBucket);
-  log(cv1Response);
   c1.cv = cv1Response.$id;
   const photo1Response = await uploadFile(candidate1.photo, photoBucket);
   c1.photo = photo1Response.$id;
@@ -61,7 +60,6 @@ const processFunction = async ({ req, res, log }) => {
   log(candidate1.photo.name);
   log("File contents");
   log(typeof candidate1.cv.content);
-  log(candidate1.cv.content);
 
   try {
     //check code + email function
