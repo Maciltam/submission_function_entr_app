@@ -58,6 +58,9 @@ const processFunction = async ({ req, res, log }) => {
   log("File names");
   log(candidate1.cv.name);
   log(candidate1.photo.name);
+  log("File contents");
+  log(typeof candidate1.cv.content);
+  log(candidate1.cv.content);
 
   try {
     //check code + email function
