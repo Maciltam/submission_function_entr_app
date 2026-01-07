@@ -51,15 +51,9 @@ const prepareRow = (receivedData, { c1, c2 }) => {
 };
 
 const processFunction = async ({ req, res, log }) => {
-  log("Starting function");
   const { table_data, files, personal_code, application_type } = req.bodyJson;
   const { candidate1, candidate2 } = files;
   const { candidate1_mail } = table_data;
-  log("File names");
-  log(candidate1.cv.name);
-  log(candidate1.photo.name);
-  log("File contents");
-  log(typeof candidate1.cv.content);
 
   try {
     //check code + email function
@@ -72,10 +66,9 @@ const processFunction = async ({ req, res, log }) => {
       { candidate1, candidate2 },
       application_type,
     );
-    log("preparing row");
+
     const row = prepareRow(table_data, { c1, c2 });
-    log(row);
-    log(typeof row.candidate1_photo_url);
+
     await createRow(row);
     return res.text(JSON.stringify({ status: "success" }));
   } catch (err) {
@@ -83,7 +76,6 @@ const processFunction = async ({ req, res, log }) => {
     if (err.message == "unregistered") {
       return res.text(JSON.stringify({ status: "unregistered" }));
     } else {
-      log(err.message);
       return res.text(JSON.stringify({ status: "internal error: " + err }));
     }
   }

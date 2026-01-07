@@ -1,4 +1,4 @@
-const { Databases, Client, Query } = require("node-appwrite");
+const { Databases, Client, Query, TablesDB } = require("node-appwrite");
 const bcrypt = require("bcrypt");
 
 const verifyCode = async ({ candidate1_mail, personal_code }) => {
@@ -7,22 +7,19 @@ const verifyCode = async ({ candidate1_mail, personal_code }) => {
     .setProject(process.env.PROJECT_ID)
     .setKey(process.env.KEY);
 
-  const databaseInterface = new Databases(client);
+  const databaseInterface = new TablesDB(client);
   const dbId = process.env.CODES_DB_ID;
   const collectionId = process.env.CODES_COLLECTION_ID;
 
-  let codes = await databaseInterface.listDocuments({
+  let codes = await databaseInterface.listRows({
     databaseId: dbId,
-    collectionId: collectionId,
+    tableId: collectionId,
     queries: [Query.equal("email", candidate1_mail)],
   });
 
-  codes = codes.documents.map(({ email, code }) => ({ email, code }));
+  codes = codes.rows.map(({ email, code }) => ({ email, code }));
 
   const found = codes.find((elt) => elt.email == candidate1_mail);
-  console.log("provided code: ", personal_code);
-
-  console.log("found: ", found);
 
   try {
     const correspondence = await bcrypt.compare(personal_code, found.code);

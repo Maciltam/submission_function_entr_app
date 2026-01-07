@@ -1,5 +1,5 @@
-const { Storage, Databases, Client, ID } = require("node-appwrite");
-const { InputFile } = require("node-appwrite/file");
+const { Client, ID, TablesDB } = require("node-appwrite");
+
 require("dotenv").config();
 
 const createRow = async (data) => {
@@ -8,17 +8,17 @@ const createRow = async (data) => {
     .setProject(process.env.PROJECT_ID)
     .setKey(process.env.KEY);
 
-  const databaseInterface = new Databases(client);
+  const databaseInterface = new TablesDB(client);
   const dbId = process.env.USERS_DB_ID;
   const collectionId = process.env.USERS_COLLECTION_ID;
 
   try {
-    const response = await databaseInterface.createDocument(
-      dbId,
-      collectionId,
-      ID.unique(),
-      data,
-    );
+    const response = await databaseInterface.createRow({
+      databaseId: dbId,
+      tableId: collectionId,
+      rowId: ID.unique(),
+      data: data,
+    });
     return response;
   } catch (err) {
     throw err;
