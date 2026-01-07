@@ -9,11 +9,11 @@ const uploadFile = async ({ content, name }, bucketId) => {
     .setKey(process.env.KEY);
   const storage = new Storage(client);
   try {
-    const response = await storage.createFile(
-      bucketId,
-      ID.unique(),
-      InputFile.fromBuffer(buffer, name),
-    );
+    const response = await storage.createFile({
+      bucketId: bucketId,
+      fileId: ID.unique(),
+      file: InputFile.fromBuffer(buffer, name),
+    });
     return response;
   } catch (err) {
     console.log(err);

@@ -23,10 +23,10 @@ const mockupRow = {
   candidate2_name: "John Doe",
   candidate1_mail: "mail1",
   candidate2_mail: "mail2",
-  candidate1_cv_id: "id",
-  candidate2_cv_id: "id",
-  candidate1_photo_id: "id",
-  candidate2_photo_id: "id",
+  candidate1_cv_url: "id",
+  candidate2_cv_url: "id",
+  candidate1_photo_url: "id",
+  candidate2_photo_url: "id",
   short_description: "short description",
   long_description: "long description",
   department: "dept",
@@ -41,7 +41,7 @@ describe("Create-row-function tests", () => {
 // Create and upload file
 const mockupFile = Buffer.from(
   JSON.stringify({ key1: "value1", key2: "value2" }),
-  "utf-8",
+  "binary",
 );
 
 describe("Upload-file-function tests", () => {
@@ -51,7 +51,7 @@ describe("Upload-file-function tests", () => {
         content: mockupFile,
         name: "file.json",
       },
-      process.env.BUCKET_ID,
+      process.env.PHOTO_BUCKET_ID,
     );
 
     assert.exists(response.$createdAt);
@@ -63,8 +63,8 @@ describe("Check code", () => {
     "It should recognize a valid code",
     async () => {
       const response = await verifyCode({
-        candidate1_mail: "mail1",
-        personal_code: "code1",
+        candidate1_mail: "test@test.com",
+        personal_code: "GMx0C",
       });
 
       assert.equal(true, response);

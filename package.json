@@ -13,6 +13,7 @@
   "type": "commonjs",
   "dependencies": {
     "appwrite": "^21.5.0",
+    "bcrypt": "^6.0.0",
     "dotenv": "^17.2.3",
     "node-appwrite": "^21.1.0"
   },
