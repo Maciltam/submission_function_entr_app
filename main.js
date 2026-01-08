@@ -13,7 +13,7 @@ const composeUploads = async ({ candidate1, candidate2 }, application_type) => {
   c1.cv = cv1Response.$id;
   const photo1Response = await uploadFile(candidate1.photo, photoBucket);
   c1.photo = photo1Response.$id;
-  if (application_type == "binome") {
+  if (application_type == "Binome") {
     //Upload cv2 and photo2
     const cv2Response = await uploadFile(candidate2.cv, cvBucket);
     c2.cv = cv2Response.$id;
