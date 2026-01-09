@@ -26,7 +26,7 @@ const composeUploads = async ({ candidate1, candidate2 }, application_type) => {
   };
 };
 
-const prepareRow = (receivedData, { c1, c2 }) => {
+const prepareRow = (receivedData, { c1, c2 }, applicationType) => {
   receivedData.candidate1_photo_url = constructUrl(
     c1.photo,
     process.env.PROJECT_ID,
@@ -37,16 +37,19 @@ const prepareRow = (receivedData, { c1, c2 }) => {
     process.env.PROJECT_ID,
     process.env.CV_BUCKET_ID,
   );
-  receivedData.candidate2_photo_url = constructUrl(
-    c2.photo,
-    process.env.PROJECT_ID,
-    process.env.PHOTO_BUCKET_ID,
-  );
-  receivedData.candidate2_cv_url = constructUrl(
-    c2.cv,
-    process.env.PROJECT_ID,
-    process.env.CV_BUCKET_ID,
-  );
+  if (application_type == "binome") {
+    receivedData.candidate2_photo_url = constructUrl(
+      c2.photo,
+      process.env.PROJECT_ID,
+      process.env.PHOTO_BUCKET_ID,
+    );
+    receivedData.candidate2_cv_url = constructUrl(
+      c2.cv,
+      process.env.PROJECT_ID,
+      process.env.CV_BUCKET_ID,
+    );
+  }
+
   return receivedData;
 };
 
@@ -68,7 +71,7 @@ const processFunction = async ({ req, res, log }) => {
       application_type,
     );
 
-    const row = prepareRow(table_data, { c1, c2 });
+    const row = prepareRow(table_data, { c1, c2 }, application_type);
 
     await createRow(row);
     return res.text(JSON.stringify({ status: "success" }));
