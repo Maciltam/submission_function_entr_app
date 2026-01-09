@@ -26,7 +26,7 @@ const composeUploads = async ({ candidate1, candidate2 }, application_type) => {
   };
 };
 
-const prepareRow = (receivedData, { c1, c2 }, applicationType) => {
+const prepareRow = (receivedData, { c1, c2 }, application_type) => {
   receivedData.candidate1_photo_url = constructUrl(
     c1.photo,
     process.env.PROJECT_ID,

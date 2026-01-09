@@ -30,6 +30,7 @@ const mockupRow = {
   short_description: "short description",
   long_description: "long description",
   department: "dept",
+  application_type: "monome",
 };
 describe("Create-row-function tests", () => {
   it("Should create and return the row", async () => {
