@@ -78,6 +78,7 @@ const processFunction = async ({ req, res, log }) => {
     if (err.message == "unregistered") {
       return res.text(JSON.stringify({ status: "unregistered" }));
     } else {
+      log(err);
       return res.text(JSON.stringify({ status: "internal error: " + err }));
     }
   }
