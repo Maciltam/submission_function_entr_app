@@ -55,7 +55,7 @@ const prepareRow = (receivedData, { c1, c2 }, application_type) => {
 
 const processFunction = async ({ req, res, log }) => {
   log("Started function");
-  log(req);
+  log(req.bodyText);
 
   const { table_data, files, personal_code } = req.bodyJson;
 
