@@ -13,7 +13,7 @@ const composeUploads = async ({ candidate1, candidate2 }, application_type) => {
   c1.cv = cv1Response.$id;
   const photo1Response = await uploadFile(candidate1.photo, photoBucket);
   c1.photo = photo1Response.$id;
-  if (application_type == "Binome") {
+  if (application_type == "binome") {
     //Upload cv2 and photo2
     const cv2Response = await uploadFile(candidate2.cv, cvBucket);
     c2.cv = cv2Response.$id;
@@ -52,6 +52,8 @@ const prepareRow = (receivedData, { c1, c2 }) => {
 
 const processFunction = async ({ req, res, log }) => {
   const { table_data, files, personal_code, application_type } = req.bodyJson;
+  log("application_type: ");
+  log(application_type);
   const { candidate1, candidate2 } = files;
   const { candidate1_mail } = table_data;
 
